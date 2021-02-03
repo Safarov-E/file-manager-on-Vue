@@ -2,7 +2,7 @@
   <div class="hello">
     <ul>
       <li v-for="(item, index) in directory" :key="index">
-        <p>{{item.file}}</p>
+        <a :href="item.file">{{item.file}}</a>
         <p>{{item.size}}</p>
         <p>{{item.birthtime | fileDate}}</p>
       </li>
@@ -12,12 +12,9 @@
 
 <script>
 import {mapGetters, mapActions} from 'vuex'
+import './expansion.css'
+import './readdir.css'
 export default {
-  data() {
-    return {
-      data: []
-    }
-  },
   computed: mapGetters(['directory']),
   methods: mapActions(['fetchDirectory']),
   filters: {
@@ -30,15 +27,3 @@ export default {
   }
 }
 </script>
-<style scoped>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  ul li {
-    list-style-type: none;
-    display: flex;
-    justify-content: space-around;
-  }
-</style>
