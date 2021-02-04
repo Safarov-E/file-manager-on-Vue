@@ -13,7 +13,6 @@ ul li p, ul li a {
     text-align: initial;
 }
 ul li a {
-    pointer-events: none;
     text-decoration: none;
     color: black;
     cursor: pointer;
