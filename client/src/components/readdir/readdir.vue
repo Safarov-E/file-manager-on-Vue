@@ -1,5 +1,6 @@
 <template>
   <div class="hello">
+    {{errorMessage ? 'Невозможно прочесть содержимое файла или папки' : null}}
     <div>
         <button @click="returnDirectories">Назад</button>
         <input type="text" v-model="isdirectory" />
@@ -24,7 +25,8 @@ export default {
   data() {
     return {
       directory: [],
-      isdirectory: ''
+      isdirectory: '',
+      errorMessage: false
     };
   },
   computed: {},
@@ -42,7 +44,7 @@ export default {
         const body = await response.json();
         this.directory = body
       } catch (e) {
-        console.log(e)
+        this.errorMessage = true
       }
     },
     async returnDirectories() {

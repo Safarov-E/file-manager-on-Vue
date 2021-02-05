@@ -32,7 +32,7 @@ app.post('/folder', function(req, res, next) {
     fs.readdir(disk.join(''), function(err, items) {
       if(err) {
         disk.pop();
-        return
+        return res.status(404).send('Невозможно прочесть содержимое файла или директории')
       }
       items.forEach((file, index, allFiles) => {
         var files = disk.join('') + '/' +  file;
