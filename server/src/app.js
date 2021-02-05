@@ -3,19 +3,40 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const morgan = require('morgan')
 const fs = require('fs');
+const childProcess = require('child_process');
 
 const app = express()
 app.use(morgan('combined'))
 app.use(bodyParser.json())
 app.use(cors())
 
-let disk = ['C:/']
+function getLocalDiskNames() {
+  const buffer = childProcess.execSync('wmic logicaldisk get Caption  /format:list').toString();
+  const lines = buffer.split('\r\r\n');
+
+  const disks = [];
+
+  for (const line of lines) {
+    if(!line) {
+      continue;
+    }
+
+    const lineData = line.split('=');
+    disks.push(lineData[1]);
+  }
+
+  return disks;
+}
+
+let disk = []
+disk.push(getLocalDiskNames()[0] + '/');
 
 app.post('/folder', function(req, res, next) {
   if(req.body.path) {
     let newPath = '/' + req.body.path
     disk.push(newPath)
   }
+        // Реализовать чтение файлов
   // if(req.body.path) {
   //   let newPath = '/' + req.body.path
   //     if(fs.lstatSync(disk.join('') + newPath).isDirectory()) disk.push(newPath) 
@@ -67,6 +88,17 @@ app.post('/path', function(req, res, next) {
       disk = newArr
     }
   });
+});
+
+app.get('/disk-selection', function(req, res, next) {
+  res.send(getLocalDiskNames())
+});
+
+app.post('/new-disk', function(req, res, next) {
+  console.log(req.body.path)
+  let newArr = [];
+  newArr.push(req.body.path + '/')
+  disk = newArr
 });
 
 app.listen(process.env.PORT || 8081)

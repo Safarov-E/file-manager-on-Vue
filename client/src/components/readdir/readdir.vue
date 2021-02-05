@@ -2,10 +2,15 @@
   <div class="hello">
     {{errorMessage ? 'Невозможно прочесть содержимое файла или папки' : null}}
     <div>
-        <button @click="returnDirectories">Назад</button>
+        <button @click="returnDirectories">Перехода в родительскую директорию</button>
         <input type="text" v-model="isdirectory" />
         <button @click="pathDirectoryInput">Перейти</button>
     </div>
+    <select @change="onDiskSelection" v-model="disc">
+      <option style="display: none" selected></option>
+      <option v-for="(disk, index) in diskSelection" :key="index">{{disk}}</option>  
+    </select>
+    {{directory.length}}
     <ul>
       <li v-for="(item, index) in directory" :key="index">
         <a :href="item.file" @click.prevent="nextFolder(item.file)">{{
@@ -26,7 +31,9 @@ export default {
     return {
       directory: [],
       isdirectory: '',
-      errorMessage: false
+      errorMessage: false,
+      diskSelection: [],
+      disc: ''
     };
   },
   computed: {},
@@ -62,8 +69,18 @@ export default {
           },
         })
         this.isdirectory = ''
-        this.nextFolder('')
       }
+    },
+    onDiskSelection() {
+      fetch("http://localhost:8081/new-disk", {
+          method: "POST",
+          body: JSON.stringify({ path: this.disc }),
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        })
+      this.nextFolder('')
     }
   },
   filters: {
@@ -73,6 +90,9 @@ export default {
   },
     mounted() {
         this.nextFolder('')
+        fetch("http://localhost:8081/disk-selection")
+          .then(res => res.json())
+          .then(res => this.diskSelection = res)
     }
 };
 </script>
