@@ -1,0 +1,560 @@
+li a {
+    background: url('../../assets/Windows-icon.png') 0 0 no-repeat;
+    background-size: 16px;
+    padding-left: 25px;
+}
+li a[href$=".ini"] {
+    background: url('../../assets/ini-file-icon-3870.png') 0 0 no-repeat;
+    background-size: 16px;
+    padding-left: 25px;
+}
+
+li a[href$=".7z"] {
+    background: url(https://image.chromefans.org/fileicons/format/7z.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".ai"] {
+    background: url(https://image.chromefans.org/fileicons/format/ai.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".aiff"] {
+    background: url(https://image.chromefans.org/fileicons/format/aiff.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".arj"] {
+    background: url(https://image.chromefans.org/fileicons/format/arj.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".asc"] {
+    background: url(https://image.chromefans.org/fileicons/format/asc.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".asp"] {
+    background: url(https://image.chromefans.org/fileicons/format/asp.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".audio"] {
+    background: url(https://image.chromefans.org/fileicons/format/audio.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".avi"] {
+    background: url(https://image.chromefans.org/fileicons/format/avi.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".bin"] {
+    background: url(https://image.chromefans.org/fileicons/format/bin.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".bmp"] {
+    background: url(https://image.chromefans.org/fileicons/format/bmp.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".bz2"] {
+    background: url(https://image.chromefans.org/fileicons/format/bz2.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".c"] {
+    background: url(https://image.chromefans.org/fileicons/format/c.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".cdr"] {
+    background: url(https://image.chromefans.org/fileicons/format/cdr.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".cfc"] {
+    background: url(https://image.chromefans.org/fileicons/format/cfc.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".cfm"] {
+    background: url(https://image.chromefans.org/fileicons/format/cfm.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".chm"] {
+    background: url(https://image.chromefans.org/fileicons/format/chm.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".class"] {
+    background: url(https://image.chromefans.org/fileicons/format/class.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".conf"] {
+    background: url(https://image.chromefans.org/fileicons/format/conf.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".cpp"] {
+    background: url(https://image.chromefans.org/fileicons/format/cpp.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".cs"] {
+    background: url(https://image.chromefans.org/fileicons/format/cs.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".css"] {
+    background: url(https://image.chromefans.org/fileicons/format/css.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".csv"] {
+    background: url(https://image.chromefans.org/fileicons/format/csv.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".deb"] {
+    background: url(https://image.chromefans.org/fileicons/format/deb.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".divx"] {
+    background: url(https://image.chromefans.org/fileicons/format/divx.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".doc"] {
+    background: url(https://image.chromefans.org/fileicons/format/doc.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".docx"] {
+    background: url(https://image.chromefans.org/fileicons/format/docx.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".dot"] {
+    background: url(https://image.chromefans.org/fileicons/format/dot.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".eml"] {
+    background: url(https://image.chromefans.org/fileicons/format/eml.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".enc"] {
+    background: url(https://image.chromefans.org/fileicons/format/enc.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".eps"] {
+    background: url(https://image.chromefans.org/fileicons/format/eps.gif) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".exe"] {
+    background: url(https://image.chromefans.org/fileicons/format/exe.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".f4v"] {
+    background: url(https://image.chromefans.org/fileicons/format/f4v.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".file"] {
+    background: url(https://image.chromefans.org/fileicons/format/file.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".flv"] {
+    background: url(https://image.chromefans.org/fileicons/format/flv.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".gif"] {
+    background: url(https://image.chromefans.org/fileicons/format/gif.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".gz"] {
+    background: url(https://image.chromefans.org/fileicons/format/gz.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".hlp"] {
+    background: url(https://image.chromefans.org/fileicons/format/hlp.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".htm"] {
+    background: url(https://image.chromefans.org/fileicons/format/htm.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".html"] {
+    background: url(https://image.chromefans.org/fileicons/format/html.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".ics"] {
+    background: url(https://image.chromefans.org/fileicons/format/ics.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".image"] {
+    background: url(https://image.chromefans.org/fileicons/format/image.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".iso"] {
+    background: url(https://image.chromefans.org/fileicons/format/iso.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".jar"] {
+    background: url(https://image.chromefans.org/fileicons/format/jar.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".java"] {
+    background: url(https://image.chromefans.org/fileicons/format/java.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".jpg"] {
+    background: url(https://image.chromefans.org/fileicons/format/jpg.gif) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".js"] {
+    background: url(https://image.chromefans.org/fileicons/format/js.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".json"] {
+    background: url(https://image.chromefans.org/fileicons/format/js.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".jsp"] {
+    background: url(https://image.chromefans.org/fileicons/format/jsp.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".lua"] {
+    background: url(https://image.chromefans.org/fileicons/format/lua.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".m"] {
+    background: url(https://image.chromefans.org/fileicons/format/m.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".mm"] {
+    background: url(https://image.chromefans.org/fileicons/format/mm.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".mov"] {
+    background: url(https://image.chromefans.org/fileicons/format/mov.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".mp3"] {
+    background: url(https://image.chromefans.org/fileicons/format/mp3.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".mpg"] {
+    background: url(https://image.chromefans.org/fileicons/format/mpg.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".msi"] {
+    background: url(https://image.chromefans.org/fileicons/format/msi.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".mp4"] {
+    background: url(https://image.chromefans.org/fileicons/format/vdo.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".odc"] {
+    background: url(https://image.chromefans.org/fileicons/format/odc.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".odf"] {
+    background: url(https://image.chromefans.org/fileicons/format/odf.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".odg"] {
+    background: url(https://image.chromefans.org/fileicons/format/odg.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".odi"] {
+    background: url(https://image.chromefans.org/fileicons/format/odi.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".odp"] {
+    background: url(https://image.chromefans.org/fileicons/format/odp.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".ods"] {
+    background: url(https://image.chromefans.org/fileicons/format/ods.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".odt"] {
+    background: url(https://image.chromefans.org/fileicons/format/odt.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".ogg"] {
+    background: url(https://image.chromefans.org/fileicons/format/ogg.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".pdf"] {
+    background: url(https://image.chromefans.org/fileicons/format/pdf.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".perl"] {
+    background: url(https://image.chromefans.org/fileicons/format/perl.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".pgp"] {
+    background: url(https://image.chromefans.org/fileicons/format/pgp.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".php"] {
+    background: url(https://image.chromefans.org/fileicons/format/php.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".pl"] {
+    background: url(https://image.chromefans.org/fileicons/format/pl.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".png"] {
+    background: url(https://image.chromefans.org/fileicons/format/png.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".ppt"] {
+    background: url(https://image.chromefans.org/fileicons/format/ppt.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".ps"] {
+    background: url(https://image.chromefans.org/fileicons/format/ps.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".psd"] {
+    background: url(https://image.chromefans.org/fileicons/format/psd.gif) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".py"] {
+    background: url(https://image.chromefans.org/fileicons/format/py.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".ram"] {
+    background: url(https://image.chromefans.org/fileicons/format/ram.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".rar"] {
+    background: url(https://image.chromefans.org/fileicons/format/rar.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".zip"] {
+    background: url(https://image.chromefans.org/fileicons/format/rar.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".rb"] {
+    background: url(https://image.chromefans.org/fileicons/format/rb.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".rm"] {
+    background: url(https://image.chromefans.org/fileicons/format/rm.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".rpm"] {
+    background: url(https://image.chromefans.org/fileicons/format/rpm.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".rtf"] {
+    background: url(https://image.chromefans.org/fileicons/format/rtf.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".ruby"] {
+    background: url(https://image.chromefans.org/fileicons/format/ruby.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".sig"] {
+    background: url(https://image.chromefans.org/fileicons/format/sig.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".sql"] {
+    background: url(https://image.chromefans.org/fileicons/format/sql.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".svg"] {
+    background: url(https://image.chromefans.org/fileicons/format/svg.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".swf"] {
+    background: url(https://image.chromefans.org/fileicons/format/swf.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".sxc"] {
+    background: url(https://image.chromefans.org/fileicons/format/sxc.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".sxd"] {
+    background: url(https://image.chromefans.org/fileicons/format/sxd.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".sxi"] {
+    background: url(https://image.chromefans.org/fileicons/format/sxi.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".sxw"] {
+    background: url(https://image.chromefans.org/fileicons/format/sxw.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".tar"] {
+    background: url(https://image.chromefans.org/fileicons/format/tar.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".tex"] {
+    background: url(https://image.chromefans.org/fileicons/format/tex.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".tgz"] {
+    background: url(https://image.chromefans.org/fileicons/format/tgz.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".tif"] {
+    background: url(https://image.chromefans.org/fileicons/format/tif.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".ttf"] {
+    background: url(https://image.chromefans.org/fileicons/format/ttf.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".txt"] {
+    background: url(https://image.chromefans.org/fileicons/format/txt.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".vb"] {
+    background: url(https://image.chromefans.org/fileicons/format/vb.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".vcf"] {
+    background: url(https://image.chromefans.org/fileicons/format/vcf.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".vdo"] {
+    background: url(https://image.chromefans.org/fileicons/format/vdo.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".video"] {
+    background: url(https://image.chromefans.org/fileicons/format/video.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".vsd"] {
+    background: url(https://image.chromefans.org/fileicons/format/vsd.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".wav"] {
+    background: url(https://image.chromefans.org/fileicons/format/wav.gif) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".wma"] {
+    background: url(https://image.chromefans.org/fileicons/format/wma.gif) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".xls"] {
+    background: url(https://image.chromefans.org/fileicons/format/xls.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".xlsx"] {
+    background: url(https://image.chromefans.org/fileicons/format/xls.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".xml"] {
+    background: url(https://image.chromefans.org/fileicons/format/xml.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".xpi"] {
+    background: url(https://image.chromefans.org/fileicons/format/xpi.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".xul"] {
+    background: url(https://image.chromefans.org/fileicons/format/xul.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".xvid"] {
+    background: url(https://image.chromefans.org/fileicons/format/xvid.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
+
+li a[href$=".zip"] {
+    background: url(https://image.chromefans.org/fileicons/format/zip.png) 0 0 no-repeat;
+    padding-left: 25px;
+}
