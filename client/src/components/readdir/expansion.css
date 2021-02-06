@@ -8,6 +8,11 @@ li a[href$=".ini"] {
     background-size: 16px;
     padding-left: 25px;
 }
+li a[href$=".dat"] {
+    background: url('../../assets/b83a52c035258ed43d787106b1765e35.png') 0 0 no-repeat;
+    background-size: 16px;
+    padding-left: 25px;
+}
 
 li a[href$=".7z"] {
     background: url(https://image.chromefans.org/fileicons/format/7z.png) 0 0 no-repeat;

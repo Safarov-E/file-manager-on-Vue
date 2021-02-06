@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
     {{errorMessage ? 'Невозможно прочесть содержимое файла или папки' : null}}
+    {{errorMessage1 ? 'Неверно указан путь' : null}}
     <div>
         <button @click="returnDirectories">Перехода в родительскую директорию</button>
         <input type="text" v-model="isdirectory" />
@@ -10,7 +11,6 @@
       <option style="display: none" selected></option>
       <option v-for="(disk, index) in diskSelection" :key="index">{{disk}}</option>  
     </select>
-    {{directory.length}}
     <ul>
       <li v-for="(item, index) in directory" :key="index">
         <a :href="item.file" @click.prevent="nextFolder(item.file)">{{
@@ -32,6 +32,7 @@ export default {
       directory: [],
       isdirectory: '',
       errorMessage: false,
+      errorMessage1: false,
       diskSelection: [],
       disc: ''
     };
@@ -52,7 +53,9 @@ export default {
         this.directory = body
       } catch (e) {
         this.errorMessage = true
+        this.$forceUpdate();
       }
+      this.currentDirectory()
     },
     async returnDirectories() {
         fetch("http://localhost:8081/return")
@@ -60,15 +63,18 @@ export default {
     },
     pathDirectoryInput() {
       if(this.isdirectory.trim() != '') {
-        fetch("http://localhost:8081/path", {
-          method: "POST",
-          body: JSON.stringify({ path: this.isdirectory }),
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        })
-        this.isdirectory = ''
+          fetch("http://localhost:8081/path", {
+            method: "POST",
+            body: JSON.stringify({ path: this.isdirectory }),
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+          })
+          .then(res => res.json())
+          .catch(e => this.errorMessage1 = true)
+          this.isdirectory = ''
+          return this.nextFolder('')
       }
     },
     onDiskSelection() {
@@ -81,6 +87,11 @@ export default {
           },
         })
       this.nextFolder('')
+    },
+    currentDirectory() {
+      fetch("http://localhost:8081/current-directory")
+        .then(res => res.json())
+        .then(res => this.isdirectory = res.join(''))
     }
   },
   filters: {
@@ -93,6 +104,7 @@ export default {
         fetch("http://localhost:8081/disk-selection")
           .then(res => res.json())
           .then(res => this.diskSelection = res)
+        this.currentDirectory()
     }
 };
 </script>

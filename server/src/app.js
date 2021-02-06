@@ -58,7 +58,9 @@ app.post('/folder', function(req, res, next) {
       items.forEach((file, index, allFiles) => {
         var files = disk.join('') + '/' +  file;
         fs.stat(files, (err, stats) => {
-          if(err) return err
+          if(err) {
+            return 
+          }
           arr.push({file, size: stats["size"], birthtime: stats['mtime']})
           if (index === allFiles.length - 1) {
             res.send(arr)
@@ -86,6 +88,8 @@ app.post('/path', function(req, res, next) {
       let newArr = [];
       newArr.push(req.body.path)
       disk = newArr
+    } else {
+      return res.send('Неверно указн путь!')
     }
   });
 });
@@ -95,10 +99,13 @@ app.get('/disk-selection', function(req, res, next) {
 });
 
 app.post('/new-disk', function(req, res, next) {
-  console.log(req.body.path)
   let newArr = [];
   newArr.push(req.body.path + '/')
   disk = newArr
+});
+
+app.get('/current-directory', function(req, res, next) {
+	res.send(disk)
 });
 
 app.listen(process.env.PORT || 8081)
