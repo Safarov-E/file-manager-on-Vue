@@ -4,6 +4,7 @@ const cors = require('cors')
 const morgan = require('morgan')
 const fs = require('fs');
 const childProcess = require('child_process');
+const fse = require('fs-extra')
 
 const app = express()
 app.use(morgan('combined'))
@@ -106,6 +107,25 @@ app.post('/new-disk', function(req, res, next) {
 
 app.get('/current-directory', function(req, res, next) {
 	res.send(disk)
+});
+
+app.post('/create-folder', function(req, res, next) {
+	fs.mkdir(req.body.path, err => {
+		console.log(err)
+	})
+});
+
+app.post('/create-file', function(req, res, next) {
+	fs.appendFile(req.body.path, '', (err) => {
+		if (err) res.send(err);
+		console.log('The "data to append" was appended to file!');
+	});
+});
+
+app.post('/delete-button', function(req, res, next) {
+  fse.remove(req.body.path, err => {
+		console.error(err)
+	})
 });
 
 app.listen(process.env.PORT || 8081)
