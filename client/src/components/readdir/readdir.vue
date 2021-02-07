@@ -2,11 +2,14 @@
   <div class="hello">
     {{ errorMessage ? "Невозможно прочесть содержимое файла или папки" : null }}
     {{ errorMessage1 ? "Неверно указан путь" : null }}
-    <div>
-      <button @click="returnDirectories"> Перехода в родительскую директорию </button>
-      <input type="text" v-model="isdirectory" />
-      <button @click="pathDirectoryInput">Перейти</button>
+
+    <div class="search-container">
+      <input type="text" v-model="isdirectory" class="search-container__input" />
+      <button @click="pathDirectoryInput" class="search-container__button">Перейти</button>
     </div>
+    <button @click="returnDirectories"> Перехода в родительскую директорию </button>
+
+
     <div class="action-btn">
       <button @click="createFolder">Создать папку</button>
       <button @click="createFile">Создать Файл</button>
@@ -26,11 +29,11 @@
         {{ disk }}
       </option>
      </select>
-    <div class="container">
+    <div class="container" @contextmenu.prevent="actionsDirectory($event)">
       <div class="listing-actions" v-show="display">
         <ul class="listing-action">
           <li class="delete" @click="deleteFile"> Удалить </li>
-          <li class="rename"> Переменовать </li>
+          <li class="rename" @click="display = false, modalRename=true, newNameFile = oldFileName"> Переменовать </li>
         </ul>
       </div>
 
@@ -38,10 +41,9 @@
         <li class="listing-head-selection">Document Name <span></span></li>
         <li class="listing-head-selection">Size <span></span></li>
         <li class="listing-head-selection">Last Edit <span></span></li>
-        <li class="listing-head-selection">Actions <span></span></li>
       </ul>
-      <div v-if="directory.length == 0">
-        <h1>Это папка пуста.</h1>
+      <div v-if="directory.length == 0" class="heading-title">
+        <h2>Это папка пуста.</h2>
       </div>
       <ul class="directory__list" v-else>
         <li v-for="(item, index) in directory" :key="index" class="directory__list-item">
@@ -62,7 +64,6 @@
               {{ item.file }}</a>
           <p class="directory__list-size">{{ item.size | sizeData }}</p>
           <p class="directory__list-data">{{ item.birthtime | fileDate }}</p>
-          <span class="actions-on-directories" @click="actionsDirectory($event, item.file)">...</span>
         </li>
       </ul>
     </div>
@@ -89,6 +90,17 @@
       </div>
     </div>
 
+    <div class="modal-rename" v-show="modalRename">
+      <div class="modal-rename__content">
+        <div class="modal-rename__input">
+          <img src="../../assets/edit.png" />
+          <input type="text" v-model="newNameFile" />
+        </div>
+        <button class="modal-button__canceling" @click="modalRename=false">Отмена</button>
+        <button class="modal-button__rename" @click="onRenameFile">Перемновать</button>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -112,7 +124,10 @@ export default {
       dataSelection: false,
       copyFile: "",
       display: false,
-      nameDeleteFile: ''
+      nameDeleteFile: '',
+      oldFileName: '',
+      modalRename: false,
+      newNameFile: ''
     }
   },
   computed: {},
@@ -151,6 +166,7 @@ export default {
           .then((res) => res.json())
           .catch((e) => (this.errorMessage1 = true));
         this.nextFolder("");
+        this.display = false
       }
     },
     onDiskSelection() {
@@ -234,8 +250,6 @@ export default {
       this.dataSelection = true;
     },
     insertFile() {
-      console.log(this.copyFile);
-      console.log(this.isdirectory);
       fetch("http://localhost:8081/move-contentn", {
         method: "POST",
         body: JSON.stringify({
@@ -251,16 +265,24 @@ export default {
       this.showDeleteFolder = false;
       this.copyFile = "";
     },
-    actionsDirectory(event, value) {
+    actionsDirectory(event) {
       let block = document.querySelector("div.listing-actions");
-      this.display = true
-      block.style.position = "fixed";
-      block.style.left = event.clientX + "px";
-      block.style.top = event.clientY + "px";
-      this.nameDeleteFile = value;
+      console.log(event.target)
+      if (event.target.classList.contains("directory__list-title")) {
+        this.display = true
+        this.oldName = event.target.textContent;
+        block.style.position = "fixed";
+        block.style.left = event.clientX + "px";
+        block.style.top = event.clientY + "px";
+        block.style.display = "block";
+        this.oldFileName = event.target.textContent
+      } else {
+        this.display = false
+      }
     },
     deleteFile() {
-      let delete_file = this.isdirectory + "/" + this.nameDeleteFile;
+      let delete_file = this.isdirectory + "/" + this.oldFileName.trim();
+      console.log(delete_file)
       fetch("http://localhost:8081/delete-button", {
         method: "POST",
         body: JSON.stringify({ path: delete_file }),
@@ -271,6 +293,22 @@ export default {
       });
       this.nextFolder("");
       this.display = false
+    },
+    onRenameFile() {
+      if (this.newNameFile.length >= 2) {
+        let old_name = this.isdirectory + "/" + this.oldFileName.trim();
+        let new_name = this.isdirectory + "/" + this.newNameFile.trim();
+        fetch("http://localhost:8081/new-rename", {
+          method: "POST",
+          body: JSON.stringify({ oldName: old_name, newName: new_name  }),
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        });
+        this.nextFolder("");
+        this.modalRename = false;
+      }
     }
   },
   filters: {

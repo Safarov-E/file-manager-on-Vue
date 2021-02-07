@@ -18,6 +18,7 @@
     padding: 20px;
     margin-bottom: 10px;
     align-items: center;
+    font-weight: 500;
 }
 .directory__list-item a, .directory__list-item p{
     width: 100%;
@@ -34,19 +35,15 @@
     display: flex;
     width: 1000px;
     margin: auto;
-    justify-content: space-between;
+    justify-content: space-around;
+    font-weight: bold;
 }
 .listing-head li {
     list-style-type: none;
     text-align: initial;
     padding-bottom: 30px;
-}
-
-.actions-on-directories {
-    font-size: 25px;
-    padding-bottom: 10px;
-    cursor: pointer;
-    display: inline;
+    width: 100%;
+    margin-left: 15px;
 }
 
 .pathSize {
@@ -55,6 +52,7 @@
 .listing-actions {
     background-color: #fff;
     border: 1px solid #ebebeb;
+    font-weight: 500;
 }
 
 .listing-actions ul {
@@ -71,4 +69,97 @@
 
 .listing-actions li:hover {
     background-color: #ebebeb;
+}
+
+
+
+.modal-rename {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+  .modal-rename__content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid black;
+    width: 550px;
+    border-radius: 10px;
+  }
+  .modal-rename__input {
+    position: relative;
+  }
+  .modal-rename__input img {
+    position: absolute;
+    top: 5px;
+    left: 34px;
+  }
+  .modal-rename__content input {
+    display: block;
+    width: 90%;
+    margin: 0 auto;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 10px 10px 40px;
+    outline:none;
+    background-color: #f1f1f1;
+    font-family: 'IBM Plex Sans';
+    font-weight: 500;
+  }
+  .modal-button__canceling {
+    background: #ff6760;
+    color: #fff;
+    padding: 10px 25px;
+    border-radius: 10px;
+    outline: none;
+    border: 1px solid #ff6760;
+    margin-right: 10px;
+    margin-top: 15px;
+  }
+  .modal-button__rename {
+    background: #5864ff;
+    color: #fff;
+    padding: 10px 25px;
+    border-radius: 10px;
+    outline: none;
+    border: 1px solid #5864ff;
+    margin-top: 15px;
+  }
+
+  .search-container {
+    width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .search-container__input {
+    width: 85%;
+    padding: 5px 10px;
+    font-family: 'IBM Plex Sans';
+    font-weight: 400;
+    border: none;
+    font-size: 17px;
+    border-radius: 10px;
+    outline: none;
+  }
+.search-container__button {
+    background: #5864ff;
+    color: #fff;
+    padding: 10px 25px;
+    border-radius: 10px;
+    outline: none;
+    border: 1px solid #5864ff;
+}
+
+
+.heading-title h2 {
+    font-weight: 400;
+    color: #717aac;
+    padding-top: 25px;
 }

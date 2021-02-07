@@ -132,15 +132,20 @@ app.post('/delete-button', function(req, res, next) {
 });
 
 app.post('/move-contentn', function(req, res, next) {
-  console.log(req.body.oldfile)
-  console.log(req.body.newFile)
   try { 
     fse.copySync(req.body.oldfile, req.body.newFile); 
-    console.log('success!', 'FIOJOIJEFJEFWEOWFJOJEIFJOIEW');
+    console.log('success!');
   } 
   catch (err) {  
-    console.error(err,  'FIOJOIJEFJEFWEOWFJOJEIFJOIEW');
+    console.error(err);
   }
+});
+
+app.post('/new-rename', function(req, res, next) {
+	fs.rename(req.body.oldName, req.body.newName, (err) => {
+		if (err) console.log(err);
+		console.log('renamed complete');
+	});
 });
 
 app.listen(process.env.PORT || 8081)
