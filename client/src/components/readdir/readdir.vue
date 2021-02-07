@@ -1,8 +1,5 @@
 <template>
   <div class="hello">
-    {{ errorMessage ? "Невозможно прочесть содержимое файла или папки" : null }}
-    {{ errorMessage1 ? "Неверно указан путь" : null }}
-
     <div class="search-container">
       <input type="text" v-model="isdirectory" class="search-container__input" />
       <button @click="pathDirectoryInput" class="search-container__button">Перейти</button>
@@ -112,12 +109,29 @@
       </div>
     </div>
 
+    <div class="modal-rename" v-show="errorMessage1">
+      <div class="modal-rename__content">
+        <img src="../../assets/icon-404.png" alt="not-found" width="150px">
+        <p class="not-found-text">Неверно указан путь</p>
+        <button class="copy-files__button" @click="nextFolder(''), errorMessage1 = false">Продолжить</button>
+      </div>
+    </div>
+
+    <div class="modal-rename" v-show="errorMessage">
+      <div class="modal-rename__content">
+        <img src="../../assets/error.png" alt="not-found" width="150px">
+        <p class="not-found-text">Невозможно прочесть содержимое файла или папки</p>
+        <button class="copy-files__button" @click="nextFolder(''), errorMessage = false">Продолжить</button>
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script>
 import "./expansion.css";
 import "./readdir.css";
+// import {getFolder} from '../services/api.js'
 export default {
   data() {
     return {
@@ -335,7 +349,7 @@ export default {
         i++;
       }
       return value.toFixed(1) + " " + type[i];
-    },
+    }
   },
   mounted() {
     this.nextFolder("");

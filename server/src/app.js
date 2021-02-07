@@ -61,6 +61,7 @@ app.post('/folder', function(req, res, next) {
       }
       items.forEach((file, index, allFiles) => {
         var files = disk.join('') + '/' +  file;
+        console.log(files)
         fs.stat(files, (err, stats) => {
           if(err) {
             return 

@@ -196,3 +196,20 @@
     outline: none;
     border: 1px solid #7983ff;
 }
+
+.device-selection {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.device-selection p {
+    margin-right: 15px;
+    font-family: 'IBM Plex Sans';
+    font-weight: 400;
+}
+.not-found-text {
+    font-family: 'IBM Plex Sans';
+    font-weight: bold;
+    font-size: 25px;
+    padding: 15px 0;
+}
