@@ -7,28 +7,39 @@
       <input type="text" v-model="isdirectory" class="search-container__input" />
       <button @click="pathDirectoryInput" class="search-container__button">Перейти</button>
     </div>
-    <button @click="returnDirectories"> Перехода в родительскую директорию </button>
 
-
-    <div class="action-btn">
-      <button @click="createFolder">Создать папку</button>
-      <button @click="createFile">Создать Файл</button>
-      <button @click="showDeleteFolder = !showDeleteFolder">Удалить</button>
+    <hr style="margin-top: 15px"/>
+    <div class="groupable-buttons">
+      <button @click="returnDirectories"> Перехода в родительскую директорию </button>
+      <div class="action-btn">
+        <button @click="createFolder">Создать папку</button>
+        <button @click="createFile">Создать Файл</button>
+        <button @click="showDeleteFolder = !showDeleteFolder">Удалить</button>
+      </div>
     </div>
-    <div>
-      <button @click="fileSelection" :disabled="!copyFile ? false : true">
+
+    <hr style="margin-top: 15px"/>
+    <div class="copy-files">
+      <button @click="fileSelection" :disabled="!copyFile ? false : true" 
+              :class="!copyFile ? 'copy-files__button' : 'copy-files__button_disabled'">
         Скопировать
       </button>
-      <button @click="insertFile" :disabled="copyFile ? false : true">
+      <button @click="insertFile" :disabled="copyFile ? false : true"
+              :class="!copyFile ? 'copy-files__button_disabled' : 'copy-files__button'">
         Переместить
       </button>
     </div>
-    <select @change="onDiskSelection" v-model="disc">
-      <option style="display: none" selected></option>
-      <option v-for="(disk, index) in diskSelection" :key="index">
-        {{ disk }}
-      </option>
-     </select>
+
+    <div class="device-selection">
+      <p>Устройства и диски: </p>
+      <select @change="onDiskSelection" v-model="disc">
+        <option style="display: none" selected></option>
+        <option v-for="(disk, index) in diskSelection" :key="index">
+          {{ disk }}
+        </option>
+      </select>
+    </div>
+
     <div class="container" @contextmenu.prevent="actionsDirectory($event)">
       <div class="listing-actions" v-show="display">
         <ul class="listing-action">

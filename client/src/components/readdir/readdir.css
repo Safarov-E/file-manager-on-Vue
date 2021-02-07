@@ -148,7 +148,7 @@
     border-radius: 10px;
     outline: none;
   }
-.search-container__button {
+.search-container__button, .groupable-buttons button {
     background: #5864ff;
     color: #fff;
     padding: 10px 25px;
@@ -162,4 +162,37 @@
     font-weight: 400;
     color: #717aac;
     padding-top: 25px;
+}
+
+.groupable-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+}
+.copy-files {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.action-btn button {
+    margin-left: 15px;
+}
+.copy-files button {
+    margin-right: 15px;
+}
+.copy-files__button {
+    background: #5864ff;
+    color: #fff;
+    padding: 10px 25px;
+    border-radius: 10px;
+    outline: none;
+    border: 1px solid #5864ff;
+}
+.copy-files__button_disabled {
+    background: #7983ff;
+    color: #fff;
+    padding: 10px 25px;
+    border-radius: 10px;
+    outline: none;
+    border: 1px solid #7983ff;
 }
