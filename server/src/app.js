@@ -56,6 +56,9 @@ app.post('/folder', function(req, res, next) {
         disk.pop();
         return res.status(404).send('Невозможно прочесть содержимое файла или директории')
       }
+      else if(items.length == 0) {
+        res.send(arr)
+      }
       items.forEach((file, index, allFiles) => {
         var files = disk.join('') + '/' +  file;
         fs.stat(files, (err, stats) => {
@@ -126,6 +129,18 @@ app.post('/delete-button', function(req, res, next) {
   fse.remove(req.body.path, err => {
 		console.error(err)
 	})
+});
+
+app.post('/move-contentn', function(req, res, next) {
+  console.log(req.body.oldfile)
+  console.log(req.body.newFile)
+  try { 
+    fse.copySync(req.body.oldfile, req.body.newFile); 
+    console.log('success!', 'FIOJOIJEFJEFWEOWFJOJEIFJOIEW');
+  } 
+  catch (err) {  
+    console.error(err,  'FIOJOIJEFJEFWEOWFJOJEIFJOIEW');
+  }
 });
 
 app.listen(process.env.PORT || 8081)
