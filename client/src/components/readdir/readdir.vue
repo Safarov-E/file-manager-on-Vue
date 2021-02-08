@@ -9,8 +9,8 @@
     <div class="groupable-buttons">
       <button @click="returnDirectories"> Перехода в родительскую директорию </button>
       <div class="action-btn">
-        <button @click="createFolder">Создать папку</button>
-        <button @click="createFile">Создать Файл</button>
+        <button @click="showfolder = true">Создать папку</button>
+        <button @click="showFile = true">Создать Файл</button>
         <button @click="showDeleteFolder = !showDeleteFolder">Удалить</button>
       </div>
     </div>
@@ -19,11 +19,11 @@
     <div class="copy-files">
       <button @click="fileSelection" :disabled="!copyFile ? false : true" 
               :class="!copyFile ? 'copy-files__button' : 'copy-files__button_disabled'">
-        Скопировать
+          Скопировать
       </button>
       <button @click="insertFile" :disabled="copyFile ? false : true"
               :class="!copyFile ? 'copy-files__button_disabled' : 'copy-files__button'">
-        Переместить
+          Переместить
       </button>
     </div>
 
@@ -37,7 +37,8 @@
       </select>
     </div>
 
-    <div class="container" @contextmenu.prevent="actionsDirectory($event)">
+    <Loader v-if="loading" />
+    <div class="container" @contextmenu.prevent="actionsDirectory($event)" v-else>
       <div class="listing-actions" v-show="display">
         <ul class="listing-action">
           <li class="delete" @click="deleteFile"> Удалить </li>
@@ -76,28 +77,6 @@
       </ul>
     </div>
 
-    <div class="renameFile_action1" v-if="showfolder">
-      <span class="close_modal1" @click="handlerClose">&times;</span>
-      <div class="inputValue1">
-        <p>Введите имя папки:</p>
-        <input type="text" v-model="folder_name" />
-      </div>
-      <div class="btn-close">
-        <button class="closeBtn" @click="handlerCreateFolder">Создать</button>
-      </div>
-    </div>
-
-    <div class="renameFile_action1" v-if="showFile">
-      <span class="close_modal1" @click="handlerClose">&times;</span>
-      <div class="inputValue1">
-        <p>Введите имя файла:</p>
-        <input type="text" v-model="file_name" />
-      </div>
-      <div class="btn-close">
-        <button class="closeBtn" @click="handlerCreateFile">Создать</button>
-      </div>
-    </div>
-
     <div class="modal-rename" v-show="modalRename">
       <div class="modal-rename__content">
         <div class="modal-rename__input">
@@ -109,19 +88,33 @@
       </div>
     </div>
 
-    <div class="modal-rename" v-show="errorMessage1">
-      <div class="modal-rename__content">
-        <img src="../../assets/icon-404.png" alt="not-found" width="150px">
-        <p class="not-found-text">Неверно указан путь</p>
-        <button class="copy-files__button" @click="nextFolder(''), errorMessage1 = false">Продолжить</button>
-      </div>
-    </div>
-
     <div class="modal-rename" v-show="errorMessage">
       <div class="modal-rename__content">
         <img src="../../assets/error.png" alt="not-found" width="150px">
         <p class="not-found-text">Невозможно прочесть содержимое файла или папки</p>
         <button class="copy-files__button" @click="nextFolder(''), errorMessage = false">Продолжить</button>
+      </div>
+    </div>
+
+    <div class="modal-rename" v-if="showfolder">
+      <div class="modal-rename__content">
+        <div class="modal-rename__input">
+          <img src="../../assets/folder.png" />
+          <input type="text" v-model="folder_name" />
+        </div>
+        <button class="modal-button__canceling" @click="handlerClose">Отмена</button>
+        <button class="modal-button__rename" @click="handlerCreateFolder">Создать</button>
+      </div>
+    </div>
+
+    <div class="modal-rename" v-if="showFile">
+      <div class="modal-rename__content">
+        <div class="modal-rename__input">
+          <img src="../../assets/edit.png" />
+          <input type="text" v-model="file_name" />
+        </div>
+        <button class="modal-button__canceling" @click="handlerClose">Отмена</button>
+        <button class="modal-button__rename" @click="handlerCreateFile">Создать</button>
       </div>
     </div>
 
@@ -131,14 +124,14 @@
 <script>
 import "./expansion.css";
 import "./readdir.css";
-// import {getFolder} from '../services/api.js'
+import Loader from '../loader/loader'
+import {getFolder} from '../../services/api.js'
 export default {
   data() {
     return {
       directory: [],
       isdirectory: "",
       errorMessage: false,
-      errorMessage1: false,
       diskSelection: [],
       disc: "",
       folder_name: "",
@@ -152,10 +145,11 @@ export default {
       nameDeleteFile: '',
       oldFileName: '',
       modalRename: false,
-      newNameFile: ''
+      newNameFile: '',
+      loading: true
     }
   },
-  computed: {},
+  components: {Loader},
   methods: {
     async nextFolder(value) {
       try {
@@ -168,6 +162,7 @@ export default {
           },
         });
         const body = await response.json();
+        this.loading = false
         this.directory = body;
       } catch (e) {
         this.errorMessage = true;
@@ -175,11 +170,14 @@ export default {
       this.currentDirectory();
     },
     returnDirectories() {
-      fetch("http://localhost:8081/return");
+      this.loading = true
+      fetch("http://localhost:8081/return")
+        .then(res => this.loading = false)
       this.nextFolder("");
     },
     pathDirectoryInput() {
       if (this.isdirectory.trim() != "") {
+        this.loading = true
         fetch("http://localhost:8081/path", {
           method: "POST",
           body: JSON.stringify({ path: this.isdirectory.trim() }),
@@ -188,34 +186,19 @@ export default {
             "Content-Type": "application/json",
           }
         })
-          .then((res) => res.json())
-          .catch((e) => (this.errorMessage1 = true));
+          .then((res) => this.loading = false)
         this.nextFolder("");
         this.display = false
       }
     },
     onDiskSelection() {
-      fetch("http://localhost:8081/new-disk", {
-        method: "POST",
-        body: JSON.stringify({ path: this.disc }),
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      });
+      getFolder("http://localhost:8081/new-disk", this.disc)
       this.nextFolder("");
     },
     currentDirectory() {
       fetch("http://localhost:8081/current-directory")
         .then((res) => res.json())
         .then((res) => (this.isdirectory = res.join("")));
-    },
-
-    createFolder() {
-      this.showfolder = true;
-    },
-    createFile() {
-      this.showFile = true;
     },
     handlerClose() {
       this.showfolder = false;
@@ -224,46 +207,29 @@ export default {
 
     handlerCreateFolder() {
       if (this.folder_name.trim() !== "") {
+        this.loading = true
         let create_folder = this.isdirectory + "/" + this.folder_name;
-        fetch("http://localhost:8081/create-folder", {
-          method: "POST",
-          body: JSON.stringify({ path: create_folder }),
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        });
+        getFolder("http://localhost:8081/create-folder", create_folder)
+          .then(res => this.loading = false)
         this.nextFolder("");
         this.folder_name = "";
+        this.handlerClose()
       }
     },
     handlerCreateFile() {
       if (this.file_name.trim() !== "") {
         let create_file = this.isdirectory + "/" + this.file_name;
-        fetch("http://localhost:8081/create-file", {
-          method: "POST",
-          body: JSON.stringify({ path: create_file }),
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        })
+        getFolder("http://localhost:8081/create-file", create_file)
           .then((res) => res.json())
           .then((err) => console.log("Невозможно создать файл"));
         this.nextFolder("");
         this.file_name = "";
+        this.handlerClose()
       }
     },
     handlerDeleteFolder(item) {
       let delete_file = this.isdirectory + "/" + item;
-      fetch("http://localhost:8081/delete-button", {
-        method: "POST",
-        body: JSON.stringify({ path: delete_file }),
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      });
+      getFolder("http://localhost:8081/delete-button", delete_file)
       this.nextFolder("");
       this.showDeleteFolder = false;
     },
@@ -307,15 +273,7 @@ export default {
     },
     deleteFile() {
       let delete_file = this.isdirectory + "/" + this.oldFileName.trim();
-      console.log(delete_file)
-      fetch("http://localhost:8081/delete-button", {
-        method: "POST",
-        body: JSON.stringify({ path: delete_file }),
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      });
+      getFolder("http://localhost:8081/delete-button", delete_file)
       this.nextFolder("");
       this.display = false
     },
