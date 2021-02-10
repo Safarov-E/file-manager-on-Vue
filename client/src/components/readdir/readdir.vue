@@ -241,6 +241,7 @@ export default {
       this.dataSelection = true;
     },
     insertFile() {
+      this.loading = true
       fetch("http://localhost:8081/move-contentn", {
         method: "POST",
         body: JSON.stringify({
@@ -251,7 +252,8 @@ export default {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-      });
+      })
+        .then(res => this.loading = true)
       this.nextFolder("");
       this.showDeleteFolder = false;
       this.copyFile = "";

@@ -134,7 +134,7 @@ app.post('/delete-button', function(req, res, next) {
 app.post('/move-contentn', function(req, res, next) {
   try { 
     fse.copySync(req.body.oldfile, req.body.newFile); 
-    console.log('success!');
+    res.send('success');
   } 
   catch (err) {  
     console.error(err);
