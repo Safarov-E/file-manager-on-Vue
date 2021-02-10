@@ -92,6 +92,7 @@ app.post('/path', function(req, res, next) {
       let newArr = [];
       newArr.push(req.body.path)
       disk = newArr
+      res.send(disk)
     } else {
       return res.send('Неверно указн путь!')
     }
@@ -106,6 +107,7 @@ app.post('/new-disk', function(req, res, next) {
   let newArr = [];
   newArr.push(req.body.path + '/')
   disk = newArr
+  res.send(disk)
 });
 
 app.get('/current-directory', function(req, res, next) {

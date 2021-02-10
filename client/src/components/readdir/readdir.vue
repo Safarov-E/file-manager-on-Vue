@@ -186,13 +186,17 @@ export default {
             "Content-Type": "application/json",
           }
         })
+          .then((res) => res.json())
           .then((res) => this.loading = false)
         this.nextFolder()
         this.display = false
       }
     },
     onDiskSelection() {
+      this.loading = true
       getFolder("http://localhost:8081/new-disk", this.disc)
+        .then(res => res.json())
+        .then(res => this.loading = false)
       this.nextFolder("");
     },
     currentDirectory() {
