@@ -114,7 +114,7 @@ app.get('/current-directory', function(req, res, next) {
 
 app.post('/create-folder', function(req, res, next) {
 	fs.mkdir(req.body.path, err => {
-		console.log(err)
+		res.send(err)
 	})
 });
 

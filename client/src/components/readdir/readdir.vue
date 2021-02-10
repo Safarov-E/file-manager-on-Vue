@@ -187,7 +187,7 @@ export default {
           }
         })
           .then((res) => this.loading = false)
-        this.nextFolder("");
+        this.nextFolder()
         this.display = false
       }
     },
