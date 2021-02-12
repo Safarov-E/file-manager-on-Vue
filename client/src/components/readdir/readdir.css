@@ -4,9 +4,12 @@
     box-sizing: border-box;
 }
 
+.hello {
+    margin-right: 20px;
+}
 
 .directory__list {
-    width: 1000px;
+    width: 800px;
     margin: 0 auto;
 }
 .directory__list .directory__list-item {
@@ -33,7 +36,7 @@
 
 .listing-head {
     display: flex;
-    width: 1000px;
+    width: 800px;
     margin: auto;
     justify-content: space-around;
     font-weight: bold;
@@ -132,7 +135,7 @@
   }
 
   .search-container {
-    width: 1000px;
+    width: 800px;
     margin: 0 auto;
     display: flex;
     align-items: center;

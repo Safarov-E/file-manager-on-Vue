@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <Readdir />
+    <div style="display: flex;width: 100%;margin: auto;justify-content: space-around;">
+      <Readdir :key="1" />
+      <Readdir :key="2" />
+    </div>
   </div>
 </template>
 
