@@ -34,7 +34,6 @@ disk.push(getLocalDiskNames()[0] + '/');
 
 app.post('/folder', function(req, res, next) {
   if(req.body.path) {
-    console.log(req.body.path)
     let newPath = []
     newPath.push(req.body.path)
     disk = newPath

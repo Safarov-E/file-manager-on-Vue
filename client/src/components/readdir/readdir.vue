@@ -47,7 +47,7 @@
 
     <div class="device-selection">
       <p>Устройства и диски:</p>
-      <select @change="onDiskSelection" v-model="disc">
+      <select @change="getFolders(disc + '/')" v-model="disc">
         <option style="display: none" selected></option>
         <option v-for="(disk, index) in diskSelection" :key="index">
           {{ disk }}
@@ -207,14 +207,18 @@ export default {
   },
   components: { Loader },
   methods: {
-    async nextFolder(value) {
+    nextFolder(value) {
+      if (value && value != this.isdirectory) {
+        this.isdirectory = this.isdirectory + "/" + value;
+      }
+      this.getFolders(this.isdirectory);
+    },
+    async getFolders(path) {
+      this.isdirectory = path;
       try {
-        if (value && value != this.isdirectory) {
-          this.isdirectory = this.isdirectory + "/" + value;
-        }
         const response = await fetch("http://localhost:8081/folder", {
           method: "POST",
-          body: JSON.stringify({ path: this.isdirectory }),
+          body: JSON.stringify({ path }),
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
@@ -250,13 +254,6 @@ export default {
         this.nextFolder();
         this.display = false;
       }
-    },
-    onDiskSelection() {
-      this.loading = true;
-      getFolder("http://localhost:8081/new-disk", this.disc)
-        .then((res) => res.json())
-        .then((res) => (this.loading = false));
-      this.nextFolder("");
     },
     async currentDirectory() {
       let res = await fetch("http://localhost:8081/current-directory");
