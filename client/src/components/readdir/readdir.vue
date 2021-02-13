@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    {{returnToDirectory}}
+    {{isdirectory}}
     <div class="search-container">
       <input
         type="text"
@@ -15,7 +15,7 @@
     <hr style="margin-top: 15px" />
     <div class="groupable-buttons">
       <button @click="returnDirectories" :disabled="returnToDirectory"
-              :class="returnToDirectory ? 'copy-files__button_disabled' : 'copy-files__button' ">
+              :style="{background: returnToDirectory ? '#7983ff' : '#5864ff'}">
         Перехода в родительскую директорию
       </button>
       <div class="action-btn">
@@ -140,7 +140,7 @@
         </p>
         <button
           class="copy-files__button"
-          @click="nextFolder(''), (errorMessage = false)"
+          @click="returnDirectories"
         >
           Продолжить
         </button>
@@ -241,45 +241,12 @@ export default {
     returnDirectories() {
       var str = this.isdirectory;
       str = str.replace(/\\/g, '/');
-      if (str.length > 3) {
-        str = str.split('/');
-        str.pop();
-        str = str.join('/');
-      } else str = str + '/';
-      if(str.length < 4) str = str + '/';
+      str = str.split('/');
+      str.pop();
+      str = str.join('/');
       this.isdirectory = str;
       this.nextFolder('');
-      // if(str.length < 3) {
-        // fetch("http://localhost:8081/return", {
-        //   method: "POST",
-        //   body: JSON.stringify({ path: str + '/' }),
-        //   headers: {
-        //     Accept: "application/json",
-        //     "Content-Type": "application/json",
-        //   },
-        // })
-      //   this.nextFolder('');
-      // } else {
-      //   str = str.split('/');
-      //   str.pop();
-      //   fetch("http://localhost:8081/return", {
-      //     method: "POST",
-      //     body: JSON.stringify({ path: str.join('/') }),
-      //     headers: {
-      //       Accept: "application/json",
-      //       "Content-Type": "application/json",
-      //     },
-      //   })
-      //   this.nextFolder('');
-      // }
-      // this.loading = true;
-      // fetch("http://localhost:8081/return")
-      //   .then(res => res.json())
-      //   .then(res => { 
-      //     console.log(res)
-      //     this.loading = false
-      //   })
-      //   this.nextFolder('');
+      this.errorMessage = false
     },
     pathDirectoryInput() {
       if (this.isdirectory.trim() != "") {
@@ -297,6 +264,9 @@ export default {
         this.nextFolder();
         this.display = false;
       }
+    },
+    unableToReadFile() {
+
     },
     async currentDirectory() {
       let res = await fetch("http://localhost:8081/current-directory");

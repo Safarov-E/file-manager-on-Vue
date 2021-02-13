@@ -54,7 +54,12 @@ app.post('/folder', function(req, res, next) {
     let arr = []
     fs.readdir(disk.join(''), function(err, items) {
       if(err) {
-        disk.pop();
+        let strPath = disk.join('/')
+        strPath = strPath.split('/')
+        strPath.pop()
+        strPath = strPath.join('/')
+        disk = strPath.split();
+        console.log(disk)
         return res.status(404).send('Невозможно прочесть содержимое файла или директории')
       }
       else if(items.length == 0) {
