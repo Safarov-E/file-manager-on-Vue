@@ -75,23 +75,19 @@ app.post('/folder', function(req, res, next) {
     });
 });
 
-app.get('/return', function(req, res, next) {
-  if(disk.length <= 1) {
-    let leng = disk.join('').substring(0, 2) + '/';
-    let newA = disk.map(item => {
-      return item = leng
-    })
-    return disk = newA
-  }
-  disk.pop();
-  res.send({len: disk.length})
+app.post('/return', function(req, res, next) {
+  let newPath = []
+  newPath.push(req.body.path)
+  disk = newPath
 });
 
 app.post('/path', function(req, res, next) {
-  fs.stat(req.body.path, function(err) {
+  var str = req.body.path;
+  str = str.replace(/\\/g, '/');
+  fs.stat(str, function(err) {
     if (!err) {
       let newArr = [];
-      newArr.push(req.body.path)
+      newArr.push(str)
       disk = newArr
       res.send(disk)
     } else {

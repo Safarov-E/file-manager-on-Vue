@@ -1,5 +1,6 @@
 <template>
   <div class="hello">
+    {{returnToDirectory}}
     <div class="search-container">
       <input
         type="text"
@@ -13,7 +14,8 @@
 
     <hr style="margin-top: 15px" />
     <div class="groupable-buttons">
-      <button @click="returnDirectories">
+      <button @click="returnDirectories" :disabled="returnToDirectory"
+              :class="returnToDirectory ? 'copy-files__button_disabled' : 'copy-files__button' ">
         Перехода в родительскую директорию
       </button>
       <div class="action-btn">
@@ -202,10 +204,15 @@ export default {
       oldFileName: "",
       modalRename: false,
       newNameFile: "",
-      loading: true,
+      loading: true
     };
   },
   components: { Loader },
+  computed: {
+    returnToDirectory() {
+      return this.isdirectory.length <= 3 ? true : false
+    }
+  },
   methods: {
     nextFolder(value) {
       if (value && value != this.isdirectory) {
@@ -232,11 +239,47 @@ export default {
       }
     },
     returnDirectories() {
-      this.loading = true;
-      fetch("http://localhost:8081/return").then(
-        (res) => (this.loading = false)
-      );
-      this.nextFolder("");
+      var str = this.isdirectory;
+      str = str.replace(/\\/g, '/');
+      if (str.length > 3) {
+        str = str.split('/');
+        str.pop();
+        str = str.join('/');
+      } else str = str + '/';
+      if(str.length < 4) str = str + '/';
+      this.isdirectory = str;
+      this.nextFolder('');
+      // if(str.length < 3) {
+        // fetch("http://localhost:8081/return", {
+        //   method: "POST",
+        //   body: JSON.stringify({ path: str + '/' }),
+        //   headers: {
+        //     Accept: "application/json",
+        //     "Content-Type": "application/json",
+        //   },
+        // })
+      //   this.nextFolder('');
+      // } else {
+      //   str = str.split('/');
+      //   str.pop();
+      //   fetch("http://localhost:8081/return", {
+      //     method: "POST",
+      //     body: JSON.stringify({ path: str.join('/') }),
+      //     headers: {
+      //       Accept: "application/json",
+      //       "Content-Type": "application/json",
+      //     },
+      //   })
+      //   this.nextFolder('');
+      // }
+      // this.loading = true;
+      // fetch("http://localhost:8081/return")
+      //   .then(res => res.json())
+      //   .then(res => { 
+      //     console.log(res)
+      //     this.loading = false
+      //   })
+      //   this.nextFolder('');
     },
     pathDirectoryInput() {
       if (this.isdirectory.trim() != "") {
