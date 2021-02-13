@@ -54,12 +54,6 @@ app.post('/folder', function(req, res, next) {
     let arr = []
     fs.readdir(disk.join(''), function(err, items) {
       if(err) {
-        let strPath = disk.join('/')
-        strPath = strPath.split('/')
-        strPath.pop()
-        strPath = strPath.join('/')
-        disk = strPath.split();
-        console.log(disk)
         return res.status(404).send('Невозможно прочесть содержимое файла или директории')
       }
       else if(items.length == 0) {
@@ -125,7 +119,7 @@ app.post('/create-folder', function(req, res, next) {
 app.post('/create-file', function(req, res, next) {
 	fs.appendFile(req.body.path, '', (err) => {
 		if (err) res.send(err);
-		console.log('The "data to append" was appended to file!');
+		res.send(req.body.path)
 	});
 });
 

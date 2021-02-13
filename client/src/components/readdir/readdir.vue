@@ -290,12 +290,12 @@ export default {
         this.handlerClose();
       }
     },
-    handlerCreateFile() {
+    async handlerCreateFile() {
       if (this.file_name.trim() !== "") {
+        this.loading = true
         let create_file = this.isdirectory + "/" + this.file_name;
-        getFolder("http://localhost:8081/create-file", create_file)
-          .then((res) => res.json())
-          .then((err) => console.log("Невозможно создать файл"));
+        let res = await getFolder("http://localhost:8081/create-file", create_file)
+        this.loading = false;
         this.nextFolder("");
         this.file_name = "";
         this.handlerClose();
