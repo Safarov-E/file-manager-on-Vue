@@ -13,8 +13,11 @@
 
     <hr style="margin-top: 15px" />
     <div class="groupable-buttons">
-      <button @click="returnDirectories" :disabled="returnToDirectory"
-              :style="{background: returnToDirectory ? '#7983ff' : '#5864ff'}">
+      <button
+        @click="returnDirectories"
+        :disabled="returnToDirectory"
+        :style="{ background: returnToDirectory ? '#7983ff' : '#5864ff' }"
+      >
         Перехода в родительскую директорию
       </button>
       <div class="action-btn">
@@ -137,10 +140,7 @@
         <p class="not-found-text">
           Невозможно прочесть содержимое файла или папки
         </p>
-        <button
-          class="copy-files__button"
-          @click="returnDirectories"
-        >
+        <button class="copy-files__button" @click="returnDirectories">
           Продолжить
         </button>
       </div>
@@ -181,11 +181,13 @@
 <script>
 import "./expansion.css";
 import "./readdir.css";
+import ApiService from "../../services/api";
 import Loader from "../loader/loader";
 import { getFolder } from "../../services/api.js";
 export default {
   data() {
     return {
+      apiService: new ApiService(),
       directory: [],
       isdirectory: "",
       errorMessage: false,
@@ -203,14 +205,14 @@ export default {
       oldFileName: "",
       modalRename: false,
       newNameFile: "",
-      loading: true
+      loading: true,
     };
   },
   components: { Loader },
   computed: {
     returnToDirectory() {
-      return this.isdirectory.length <= 3 ? true : false
-    }
+      return this.isdirectory.length <= 3 ? true : false;
+    },
   },
   methods: {
     nextFolder(value) {
@@ -222,58 +224,43 @@ export default {
     async getFolders(path) {
       this.isdirectory = path;
       try {
-        const response = await fetch("http://localhost:8081/folder", {
-          method: "POST",
-          body: JSON.stringify({ path }),
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        });
-        const body = await response.json();
+        const response = await this.apiService.getFolder(
+          JSON.stringify({ path })
+        );
         this.loading = false;
-        this.directory = body;
+        this.directory = response;
       } catch (e) {
         this.errorMessage = true;
-        console.clear()
+        console.clear();
       }
     },
     returnDirectories() {
       var str = this.isdirectory;
-      str = str.replace(/\\/g, '/');
-      if(str.length > 3) {
-        str = str.split('/');
+      str = str.replace(/\\/g, "/");
+      if (str.length > 3) {
+        str = str.split("/");
         str.pop();
-        str = str.join('/');
+        str = str.join("/");
       }
-      if(str.length < 3) str = str + '/'
-      if(str.length < 2) str = this.diskSelection[0] + '/'
+      if (str.length < 3) str = str + "/";
+      if (str.length < 2) str = this.diskSelection[0] + "/";
       this.isdirectory = str;
-      this.nextFolder('');
-      this.errorMessage = false
+      this.nextFolder("");
+      this.errorMessage = false;
     },
     pathDirectoryInput() {
       if (this.isdirectory.trim() != "") {
         this.loading = true;
-        var path = this.isdirectory;
-        fetch("http://localhost:8081/path", {
-          method: "POST",
-          body: JSON.stringify({ path: this.isdirectory.trim() }),
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        })
-          .then((res) => res.json())
+        this.apiService
+          .getPath(JSON.stringify({ path: this.isdirectory.trim() }))
           .then((res) => (this.loading = false));
-        this.nextFolder('');
+        this.nextFolder("");
         this.display = false;
       }
     },
     async currentDirectory() {
-      let res = await fetch("http://localhost:8081/current-directory");
-      let path = await res.json();
-      return path.join("");
+      const res = await this.apiService.getCurrentDirectory();
+      return res.join("");
     },
     handlerClose() {
       this.showfolder = false;
@@ -283,10 +270,10 @@ export default {
     handlerCreateFolder() {
       if (this.folder_name.trim() !== "") {
         this.loading = true;
-        let create_folder = this.isdirectory + "/" + this.folder_name;
-        getFolder("http://localhost:8081/create-folder", create_folder).then(
-          (res) => (this.loading = false)
-        );
+        let folderName = this.isdirectory + "/" + this.folder_name;
+        this.apiService
+          .createFolder(JSON.stringify({ folderName }))
+          .then((res) => (this.loading = false));
         this.nextFolder("");
         this.folder_name = "";
         this.handlerClose();
@@ -294,18 +281,18 @@ export default {
     },
     async handlerCreateFile() {
       if (this.file_name.trim() !== "") {
-        this.loading = true
-        let create_file = this.isdirectory + "/" + this.file_name;
-        let res = await getFolder("http://localhost:8081/create-file", create_file)
-        this.loading = false;
-        this.nextFolder("");
+        this.loading = true;
+        this.file_name = this.isdirectory + "/" + this.file_name;
+        let res = await this.apiService
+          .createFile(JSON.stringify({ file_name: this.file_name }))
+          .then((res) => this.nextFolder(""));
         this.file_name = "";
         this.handlerClose();
       }
     },
     handlerDeleteFolder(item) {
-      let delete_file = this.isdirectory + "/" + item;
-      getFolder("http://localhost:8081/delete-button", delete_file);
+      const fileName = this.isdirectory + "/" + item;
+      this.apiService.deleteContent(JSON.stringify({ fileName }));
       this.nextFolder("");
       this.showDeleteFolder = false;
     },
@@ -318,17 +305,12 @@ export default {
     },
     insertFile() {
       this.loading = true;
-      fetch("http://localhost:8081/move-contentn", {
-        method: "POST",
-        body: JSON.stringify({
+      this.apiService.moveContent(
+        JSON.stringify({
           oldfile: this.copyFile,
           newFile: this.isdirectory,
-        }),
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }).then((res) => (this.loading = true));
+        })
+      );
       this.nextFolder("");
       this.showDeleteFolder = false;
       this.copyFile = "";
@@ -348,8 +330,8 @@ export default {
       }
     },
     deleteFile() {
-      let delete_file = this.isdirectory + "/" + this.oldFileName.trim();
-      getFolder("http://localhost:8081/delete-button", delete_file);
+      const fileName = this.isdirectory + "/" + this.oldFileName.trim();
+      this.apiService.deleteContent(JSON.stringify({ fileName }));
       this.nextFolder("");
       this.display = false;
     },
@@ -357,14 +339,9 @@ export default {
       if (this.newNameFile.length >= 2) {
         let old_name = this.isdirectory + "/" + this.oldFileName.trim();
         let new_name = this.isdirectory + "/" + this.newNameFile.trim();
-        fetch("http://localhost:8081/new-rename", {
-          method: "POST",
-          body: JSON.stringify({ oldName: old_name, newName: new_name }),
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        });
+        this.apiService.rename(
+          JSON.stringify({ oldName: old_name, newName: new_name })
+        );
         this.nextFolder("");
         this.modalRename = false;
       }
@@ -388,8 +365,8 @@ export default {
   async mounted() {
     this.isdirectory = await this.currentDirectory();
     this.nextFolder(this.isdirectory);
-    fetch("http://localhost:8081/disk-selection")
-      .then((res) => res.json())
+    this.apiService
+      .getDiskSelection()
       .then((res) => (this.diskSelection = res));
   },
 };

@@ -18,7 +18,7 @@ function getLocalDiskNames() {
   const disks = [];
 
   for (const line of lines) {
-    if(!line) {
+    if (!line) {
       continue;
     }
 
@@ -32,112 +32,124 @@ function getLocalDiskNames() {
 let disk = []
 disk.push(getLocalDiskNames()[0] + '/');
 
-app.post('/folder', function(req, res, next) {
-  if(req.body.path) {
+app.post('/folder', function (req, res, next) {
+  if (req.body.path) {
     let newPath = []
     newPath.push(req.body.path)
     disk = newPath
   }
-        // Реализовать чтение файлов
-  // if(req.body.path) {
-  //   let newPath = '/' + req.body.path
-  //     if(fs.lstatSync(disk.join('') + newPath).isDirectory()) disk.push(newPath) 
-  //     else {
-  //       fs.readFile(disk.join('') + newPath, "utf8", 
-  //       function(error,data){
-  //         if(error) return;
-  //         res.send(data)
-  //       });
-  //     }
-  // }
-    
-    let arr = []
-    fs.readdir(disk.join(''), function(err, items) {
-      if(err) {
-        return res.status(404).send('Невозможно прочесть содержимое файла или директории')
-      }
-      else if(items.length == 0) {
-        res.send(arr)
-      }
-      items.forEach((file, index, allFiles) => {
-        var files = disk.join('') + '/' +  file;
-        fs.stat(files, (err, stats) => {
-          if(err) {
-            return 
-          }
-          arr.push({file, size: stats["size"], birthtime: stats['mtime']})
-          if (index === allFiles.length - 1) {
-            res.send(arr)
-          }
-        });
-      })
-    });
+
+  let arr = []
+  fs.readdir(disk.join(''), function (err, items) {
+    if (err) {
+      return res.status(404).send('Невозможно прочесть содержимое файла или директории')
+    } else if (items.length == 0) {
+      res.send(arr)
+    }
+    items.forEach((file, index, allFiles) => {
+      var files = disk.join('') + '/' + file;
+      fs.stat(files, (err, stats) => {
+        if (err) {
+          return;
+        }
+        arr.push({
+          file,
+          size: stats["size"],
+          birthtime: stats['mtime']
+        })
+        if (index === allFiles.length - 1) {
+          res.send(arr)
+        }
+      });
+    })
+  });
 });
 
-app.post('/path', function(req, res, next) {
+app.post('/path', function (req, res, next) {
   var str = req.body.path;
   str = str.replace(/\\/g, '/');
-  fs.stat(str, function(err) {
+  fs.stat(str, function (err) {
     if (!err) {
       let newArr = [];
       newArr.push(str)
       disk = newArr
-      res.send([1])
+      res.send(disk)
     } else {
       return res.send(disk)
     }
   });
 });
 
-app.get('/disk-selection', function(req, res, next) {
+app.get('/disk-selection', function (req, res, next) {
   res.send(getLocalDiskNames())
 });
 
-app.post('/new-disk', function(req, res, next) {
+app.post('/new-disk', function (req, res, next) {
   let newArr = [];
   newArr.push(req.body.path + '/')
   disk = newArr
   res.send(disk)
 });
 
-app.get('/current-directory', function(req, res, next) {
-	res.send(disk)
+app.get('/current-directory', function (req, res, next) {
+  res.send(disk)
 });
 
-app.post('/create-folder', function(req, res, next) {
-	fs.mkdir(req.body.path, err => {
-		res.send(err)
-	})
+app.post('/create-folder', function (req, res, next) {
+  fs.mkdir(req.body.folderName, err => {
+    res.send({
+      result: 1
+    });
+  })
 });
 
-app.post('/create-file', function(req, res, next) {
-	fs.appendFile(req.body.path, '', (err) => {
-		if (err) res.send(err);
-		res.send(req.body.path)
-	});
+app.post('/create-file', function (req, res, next) {
+  fs.appendFile(req.body.file_name, '', (err) => {
+    if (err) {
+      res.send({
+        result: 0
+      });
+    } else {
+      res.send({
+        result: 1
+      });
+    }
+  });
 });
 
-app.post('/delete-button', function(req, res, next) {
-  fse.remove(req.body.path, err => {
-		console.error(err)
-	})
+app.post('/delete-content', function (req, res, next) {
+  fse.remove(req.body.fileName, err => {
+    if (err) {
+      res.send({
+        result: 0
+      });
+    } else {
+      res.send({
+        result: 1
+      });
+    }
+  })
 });
 
-app.post('/move-contentn', function(req, res, next) {
-  try { 
-    fse.copySync(req.body.oldfile, req.body.newFile); 
-    res.send('success');
-  } 
-  catch (err) {  
+app.post('/move-content', function (req, res, next) {
+  try {
+    fse.copySync(req.body.oldfile, req.body.newFile);
+    res.send({
+      result: 1
+    });
+  } catch (err) {
+    res.send({
+      result: 0
+    });
     console.error(err);
   }
 });
 
-app.post('/new-rename', function(req, res, next) {
-	fs.rename(req.body.oldName, req.body.newName, (err) => {
-		if (err) console.log(err);
-		console.log('renamed complete');
-	});
+app.post('/rename', function (req, res, next) {
+  fs.rename(req.body.oldName, req.body.newName, (err) => {
+    if (err) console.log(err);
+    console.log('renamed complete');
+  });
 });
 
-app.listen(process.env.PORT || 8081)
+app.listen(process.env.PORT || 3000);
