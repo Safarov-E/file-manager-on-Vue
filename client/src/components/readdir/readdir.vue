@@ -273,19 +273,23 @@ export default {
         let folderName = this.isdirectory + "/" + this.folder_name;
         this.apiService
           .createFolder(JSON.stringify({ folderName }))
-          .then((res) => (this.loading = false));
-        this.nextFolder("");
+          .then((res) => {
+            this.loading = false;
+            this.nextFolder("");
+          });
         this.folder_name = "";
         this.handlerClose();
       }
     },
-    async handlerCreateFile() {
+    handlerCreateFile() {
       if (this.file_name.trim() !== "") {
         this.loading = true;
         this.file_name = this.isdirectory + "/" + this.file_name;
-        let res = await this.apiService
+        this.apiService
           .createFile(JSON.stringify({ file_name: this.file_name }))
-          .then((res) => this.nextFolder(""));
+          .then((res) => {
+            this.nextFolder("")
+          });
         this.file_name = "";
         this.handlerClose();
       }
@@ -341,8 +345,8 @@ export default {
         let new_name = this.isdirectory + "/" + this.newNameFile.trim();
         this.apiService.rename(
           JSON.stringify({ oldName: old_name, newName: new_name })
-        );
-        this.nextFolder("");
+        ).then(res => this.nextFolder(""))
+        this.nextFolder("")
         this.modalRename = false;
       }
     },

@@ -104,7 +104,7 @@ app.post('/create-folder', function (req, res, next) {
 });
 
 app.post('/create-file', function (req, res, next) {
-  fs.appendFile(req.body.file_name, '', (err) => {
+  fs.writeFile(req.body.file_name, '', (err) => {
     if (err) {
       res.send({
         result: 0
@@ -147,8 +147,15 @@ app.post('/move-content', function (req, res, next) {
 
 app.post('/rename', function (req, res, next) {
   fs.rename(req.body.oldName, req.body.newName, (err) => {
-    if (err) console.log(err);
-    console.log('renamed complete');
+    if (err) {
+      res.send({
+        result: 0
+      });
+    } else {
+      res.send({
+        result: 1
+      });
+    }
   });
 });
 
