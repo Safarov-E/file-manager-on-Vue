@@ -236,14 +236,18 @@ export default {
         this.directory = body;
       } catch (e) {
         this.errorMessage = true;
+        console.clear()
       }
     },
     returnDirectories() {
       var str = this.isdirectory;
       str = str.replace(/\\/g, '/');
-      str = str.split('/');
-      str.pop();
-      str = str.join('/');
+      if(str.length > 3) {
+        str = str.split('/');
+        str.pop();
+        str = str.join('/');
+      }
+      if(str.length < 3) str = str + '/'
       this.isdirectory = str;
       this.nextFolder('');
       this.errorMessage = false
