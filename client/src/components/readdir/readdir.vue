@@ -6,6 +6,7 @@
         type="text"
         v-model="isdirectory"
         class="search-container__input"
+        @click="oldPath"
       />
       <button @click="pathDirectoryInput" class="search-container__button">
         Перейти
@@ -204,7 +205,8 @@ export default {
       oldFileName: "",
       modalRename: false,
       newNameFile: "",
-      loading: true
+      loading: true,
+      oldPathClick: ''
     };
   },
   components: { Loader },
@@ -248,6 +250,7 @@ export default {
         str = str.join('/');
       }
       if(str.length < 3) str = str + '/'
+      if(str.length < 2) str = this.oldPathClick
       this.isdirectory = str;
       this.nextFolder('');
       this.errorMessage = false
@@ -255,6 +258,7 @@ export default {
     pathDirectoryInput() {
       if (this.isdirectory.trim() != "") {
         this.loading = true;
+        var path = this.isdirectory;
         fetch("http://localhost:8081/path", {
           method: "POST",
           body: JSON.stringify({ path: this.isdirectory.trim() }),
@@ -265,12 +269,13 @@ export default {
         })
           .then((res) => res.json())
           .then((res) => (this.loading = false));
+        console.log(path)
         this.nextFolder();
         this.display = false;
       }
     },
-    unableToReadFile() {
-
+    oldPath() {
+      this.oldPathClick = this.isdirectory
     },
     async currentDirectory() {
       let res = await fetch("http://localhost:8081/current-directory");

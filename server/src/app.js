@@ -74,12 +74,6 @@ app.post('/folder', function(req, res, next) {
     });
 });
 
-app.post('/return', function(req, res, next) {
-  let newPath = []
-  newPath.push(req.body.path)
-  disk = newPath
-});
-
 app.post('/path', function(req, res, next) {
   var str = req.body.path;
   str = str.replace(/\\/g, '/');
