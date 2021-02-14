@@ -82,9 +82,9 @@ app.post('/path', function(req, res, next) {
       let newArr = [];
       newArr.push(str)
       disk = newArr
-      res.send(disk)
+      res.send([1])
     } else {
-      return res.send('Неверно указн путь!')
+      return res.send(disk)
     }
   });
 });

@@ -1,12 +1,10 @@
 <template>
   <div class="hello">
-    {{isdirectory}}
     <div class="search-container">
       <input
         type="text"
         v-model="isdirectory"
         class="search-container__input"
-        @click="oldPath"
       />
       <button @click="pathDirectoryInput" class="search-container__button">
         Перейти
@@ -205,8 +203,7 @@ export default {
       oldFileName: "",
       modalRename: false,
       newNameFile: "",
-      loading: true,
-      oldPathClick: ''
+      loading: true
     };
   },
   components: { Loader },
@@ -250,7 +247,7 @@ export default {
         str = str.join('/');
       }
       if(str.length < 3) str = str + '/'
-      if(str.length < 2) str = this.oldPathClick
+      if(str.length < 2) str = this.diskSelection[0] + '/'
       this.isdirectory = str;
       this.nextFolder('');
       this.errorMessage = false
@@ -269,13 +266,9 @@ export default {
         })
           .then((res) => res.json())
           .then((res) => (this.loading = false));
-        console.log(path)
-        this.nextFolder();
+        this.nextFolder('');
         this.display = false;
       }
-    },
-    oldPath() {
-      this.oldPathClick = this.isdirectory
     },
     async currentDirectory() {
       let res = await fetch("http://localhost:8081/current-directory");
@@ -342,7 +335,6 @@ export default {
     },
     actionsDirectory(event) {
       let block = document.querySelector("div.listing-actions");
-      console.log(event.target);
       if (event.target.classList.contains("directory__list-title")) {
         this.display = true;
         this.oldName = event.target.textContent;
