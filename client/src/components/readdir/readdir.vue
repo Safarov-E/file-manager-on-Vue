@@ -30,7 +30,7 @@
     <hr style="margin-top: 15px" />
     <div class="copy-files">
       <button
-        @click="fileSelection"
+        @click="dataSelection = true"
         :disabled="!copyFile ? false : true"
         :class="
           !copyFile ? 'copy-files__button' : 'copy-files__button_disabled'
@@ -183,7 +183,6 @@ import "./expansion.css";
 import "./readdir.css";
 import ApiService from "../../services/api";
 import Loader from "../loader/loader";
-import { getFolder } from "../../services/api.js";
 export default {
   data() {
     return {
@@ -308,9 +307,6 @@ export default {
     copyСontent(value) {
       this.copyFile = this.isdirectory + "/" + value;
       this.dataSelection = false;
-    },
-    fileSelection() {
-      this.dataSelection = true;
     },
     async insertFile() {
       this.loading = true;
