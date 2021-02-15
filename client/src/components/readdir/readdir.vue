@@ -296,8 +296,8 @@ export default {
     },
     handlerDeleteFolder(item) {
       const fileName = this.isdirectory + "/" + item;
-      this.apiService.deleteContent(JSON.stringify({ fileName }));
-      this.nextFolder("");
+      this.apiService.deleteContent(JSON.stringify({ fileName }))
+      .then(res => this.nextFolder(""))
       this.showDeleteFolder = false;
     },
     copyСontent(value) {
@@ -336,8 +336,8 @@ export default {
     },
     deleteFile() {
       const fileName = this.isdirectory + "/" + this.oldFileName.trim();
-      this.apiService.deleteContent(JSON.stringify({ fileName }));
-      this.nextFolder("");
+      this.apiService.deleteContent(JSON.stringify({ fileName }))
+        .then(res => this.nextFolder(""))
       this.display = false;
     },
     onRenameFile() {
