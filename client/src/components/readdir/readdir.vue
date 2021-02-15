@@ -3,7 +3,7 @@
     <div class="search-container">
       <input
         type="text"
-        v-model="isdirectory"
+        v-model.trim ="isdirectory"
         class="search-container__input"
       />
       <button @click="pathDirectoryInput" class="search-container__button">
@@ -307,14 +307,15 @@ export default {
     fileSelection() {
       this.dataSelection = true;
     },
-    insertFile() {
+    async insertFile() {
       this.loading = true;
-      this.apiService.moveContent(
+      const res = await this.apiService.moveContent(
         JSON.stringify({
           oldfile: this.copyFile,
           newFile: this.isdirectory,
         })
-      );
+      )
+      this.loading = false
       this.nextFolder("");
       this.showDeleteFolder = false;
       this.copyFile = "";
